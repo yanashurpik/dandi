@@ -14,10 +14,9 @@ function maskApiKey(key: string): string {
 }
 
 // GET /api/apikeys/[id] - Get a specific API key
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
   try {
     const cookieStore = await cookies();
     
@@ -48,7 +47,6 @@ export async function GET(
       );
     }
 
-    const id = params.id;
     if (!id) {
       return NextResponse.json(
         { error: 'API key ID is required' },
@@ -98,10 +96,9 @@ export async function GET(
 }
 
 // PUT /api/apikeys/[id] - Update an API key
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
   try {
     const cookieStore = await cookies();
     
@@ -132,7 +129,6 @@ export async function PUT(
       );
     }
 
-    const id = params.id;
     if (!id) {
       return NextResponse.json(
         { error: 'API key ID is required' },
@@ -182,10 +178,9 @@ export async function PUT(
 }
 
 // DELETE /api/apikeys/[id] - Delete an API key
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
   try {
     const cookieStore = await cookies();
     
@@ -216,7 +211,6 @@ export async function DELETE(
       );
     }
 
-    const id = params.id;
     if (!id) {
       return NextResponse.json(
         { error: 'API key ID is required' },
