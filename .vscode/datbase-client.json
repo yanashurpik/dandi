@@ -1,0 +1,44 @@
+{
+    "database.connections": {
+        "1740931026014": {
+            "host": "aws-0-ap-southeast-1.pooler.supabase.com",
+            "dbPath": "",
+            "port": "6543",
+            "user": "postgres.eryujuxrafmhafbmafqm",
+            "authType": "default",
+            "password": "5BA8bD*JP9QnSyZ",
+            "encoding": "utf8",
+            "clientKeyPath": null,
+            "clientCertPath": null,
+            "caPath": null,
+            "database": "postgres",
+            "useSSL": false,
+            "usingSSH": false,
+            "showHidden": false,
+            "includeDatabases": null,
+            "dbType": "PostgreSQL",
+            "encrypt": false,
+            "isCluster": false,
+            "connectionUrl": "",
+            "srv": false,
+            "esAuth": "none",
+            "global": false,
+            "key": "1740931026014",
+            "timezone": "+00:00",
+            "ssh": {
+                "host": "",
+                "privateKeyPath": "/Users/yanashurpik/.ssh/id_rsa",
+                "port": 22,
+                "username": "root",
+                "type": "password",
+                "connectTimeout": 10000,
+                "algorithms": {
+                    "cipher": []
+                }
+            },
+            "connectTimeout": "100000000",
+            "name": "db-supabase",
+            "connectionKey": "database.connections"
+        }
+    }
+}
