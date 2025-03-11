@@ -4,14 +4,20 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
-import { showSuccessToast, showDeleteToast, showCreateToast } from '@/lib/toasts';
 import { createApiKey, deleteApiKey, updateApiKey, copyApiKey, viewApiKey } from '@/lib/api-handlers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+// Define a User type for better type safety
+interface User {
+  id: string;
+  email?: string;
+  // Add other user properties as needed
+}
+
 // User Panel Component
 function UserPanel() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const supabase = createClient();
@@ -28,7 +34,7 @@ function UserPanel() {
     }
     
     getUserProfile();
-  }, []);
+  }, [router, supabase.auth]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -229,9 +235,9 @@ export default function Dashboards() {
       
       setApiKeys([...apiKeys, newKey]);
       resetImportForm();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Failed to import API key:', err);
-      setError(`Failed to import API key: ${err.message}`);
+      setError(`Failed to import API key: ${err instanceof Error ? err.message : 'Unknown error'}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -284,10 +290,7 @@ export default function Dashboards() {
             </div>
           </div>
           
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
-            The key is used to authenticate your requests to the <a href="#" className="text-blue-600 dark:text-blue-400">Research API</a>. 
-            To learn more, see the <a href="#" className="text-blue-600 dark:text-blue-400">documentation</a> page.
-          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Secure API key management for your applications</p>
 
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
@@ -301,7 +304,7 @@ export default function Dashboards() {
             </div>
           ) : apiKeys.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-gray-500">You haven't created any API keys yet.</p>
+              <p className="text-gray-500">You havent created any API keys yet.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -555,7 +558,7 @@ export default function Dashboards() {
                 )}
                 
                 <div className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                  * If the combined usage of all your keys exceeds your plan's limit, all requests will be rejected.
+                  * If the combined usage of all your keys exceeds your plans limit, all requests will be rejected.
                 </div>
               </div>
 

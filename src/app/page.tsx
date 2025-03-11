@@ -28,7 +28,7 @@ export default function Home() {
     });
 
     return () => subscription.unsubscribe();
-  }, [router]);
+  }, [router, supabase.auth]);
 
   if (isLoading) {
     return (

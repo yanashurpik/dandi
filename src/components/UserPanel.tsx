@@ -4,8 +4,15 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
+// Define a User type for better type safety
+interface User {
+  id: string;
+  email?: string;
+  // Add other user properties as needed
+}
+
 export function UserPanel() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const supabase = createClient();
@@ -22,7 +29,7 @@ export function UserPanel() {
     }
     
     getUserProfile();
-  }, []);
+  }, [supabase.auth]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();

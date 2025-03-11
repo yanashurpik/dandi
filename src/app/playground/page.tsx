@@ -32,7 +32,7 @@ export default function Playground() {
       // If validation successful, redirect to protected page
       router.push('/protected');
     } catch (err) {
-      showErrorToast('Invalid API key. Please try again.');
+      showErrorToast(`Invalid API key. Please try again. ${err}`);
     } finally {
       setIsValidating(false);
     }

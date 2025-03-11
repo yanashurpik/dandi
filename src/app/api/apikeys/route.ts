@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import { getApiKeys, createApiKey } from '@/lib/db';
 
 // GET /api/apikeys - List all API keys for the authenticated user
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
