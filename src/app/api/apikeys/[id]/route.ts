@@ -17,6 +17,12 @@ function maskApiKey(key: string): string {
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id');
+  if (!id) {
+    return NextResponse.json(
+      { error: 'API key ID is required' },
+      { status: 400 }
+    );
+  }
   try {
     const cookieStore = await cookies();
     
@@ -44,13 +50,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
-      );
-    }
-
-    if (!id) {
-      return NextResponse.json(
-        { error: 'API key ID is required' },
-        { status: 400 }
       );
     }
 
@@ -97,8 +96,14 @@ export async function GET(request: NextRequest) {
 
 // PUT /api/apikeys/[id] - Update an API key
 export async function PUT(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get('id');
+  const url = new URL(request.url);
+  const id = url.pathname.split('/').pop();
+  if (!id) {
+    return NextResponse.json(
+      { error: 'API key ID is required' },
+      { status: 400 }
+    );
+  }
   try {
     const cookieStore = await cookies();
     
@@ -126,13 +131,6 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
-      );
-    }
-
-    if (!id) {
-      return NextResponse.json(
-        { error: 'API key ID is required' },
-        { status: 400 }
       );
     }
 
@@ -179,8 +177,14 @@ export async function PUT(request: NextRequest) {
 
 // DELETE /api/apikeys/[id] - Delete an API key
 export async function DELETE(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get('id');
+  const url = new URL(request.url);
+  const id = url.pathname.split('/').pop();
+  if (!id) {
+    return NextResponse.json(
+      { error: 'API key ID is required' },
+      { status: 400 }
+    );
+  }
   try {
     const cookieStore = await cookies();
     
@@ -208,13 +212,6 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
-      );
-    }
-
-    if (!id) {
-      return NextResponse.json(
-        { error: 'API key ID is required' },
-        { status: 400 }
       );
     }
 
