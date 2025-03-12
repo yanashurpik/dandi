@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { createApiKey, deleteApiKey, updateApiKey, copyApiKey, viewApiKey } from '@/lib/api-handlers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { maskApiKey } from '@/lib/utils';
 
 // Define a User type for better type safety
 interface User {
@@ -232,6 +233,8 @@ export default function Dashboards() {
       // Add default type and usage
       newKey.type = importKeyType;
       newKey.usage = 0;
+      // Mask the key before adding it to the state
+      newKey.key = maskApiKey(newKey.key);
       
       setApiKeys([...apiKeys, newKey]);
       resetImportForm();
