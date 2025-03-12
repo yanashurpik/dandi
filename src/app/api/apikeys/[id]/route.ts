@@ -15,8 +15,8 @@ function maskApiKey(key: string): string {
 
 // GET /api/apikeys/[id] - Get a specific API key
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const id = searchParams.get('id');
+  const url = new URL(request.url);
+  const id = url.pathname.split('/').pop();
   if (!id) {
     return NextResponse.json(
       { error: 'API key ID is required' },
@@ -54,7 +54,6 @@ export async function GET(request: NextRequest) {
     }
 
     // Get the showFull parameter from the URL
-    const url = new URL(request.url);
     const showFull = url.searchParams.get('showFull') === 'true';
 
     // Get the API key
